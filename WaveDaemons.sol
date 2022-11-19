@@ -84,6 +84,30 @@ contract WaveDaemons is ERC721, ERC2981Collection, IMAX721, ERC165Storage, Payme
       _tokenIdCounter.increment();
     }
   }
+  
+  /**
+ *To burn TinyDaemons ERC721 NFT tokens, you must first approve the WaveDaemons contract address in the NFT contract, using setApprovalForAll bool True
+ */
+  
+  function burn2Mint(uint256[] calldata tokenIds) external {
+    //THE REQUIREMENTS
+    require(enableMinter, "Minter not active");
+    require(_tokenIdCounter.current() + 1 < mintSize, "Can not mint that many");
+    require(tokenIds.length == 5, "YOU MUST SACRIFICE 5 TINYS COWARD");
+    
+    //THE BURN
+    
+    for (uint256 i = 0; i < tokenIds.length; i++) {
+      IERC721 erc721 = IERC721(nftcollection);
+      erc721.safeTransferFrom(msg.sender, 0x000000000000000000000000000000000000dead, tokenIds[i]);
+        }
+    //THE MINT
+    _safeMint(msg.sender, _tokenIdCounter.current());
+    _tokenIdCounter.increment();
+    
+  }
+    
+    
 
   function teamMint(address _address) public onlyOwner {
     require(teamMintSize != 0, "Team minting not enabled");
