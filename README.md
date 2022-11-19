@@ -6,7 +6,7 @@ WaveDaemons: PFP + Music NFTs, 1K supply.
  Mint site: https://www.bitdaemons.space/wavedaemons
 
 Need: <br>
-publicMint (50$FTM) <br>
+publicMint (60$FTM) <br>
 burnToMint (5 x TinyDaemons) <br>
 teamMint (roughly 400 pieces for BD holders + auction piece holders) <br>
 <br>
