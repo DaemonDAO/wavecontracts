@@ -1,6 +1,6 @@
 # wavecontracts
 
-Contract(s) for the WaveDaemons
+.sol contract(s) for the WaveDaemons collection on Fantom 
 
 WaveDaemons: PFP + Music NFTs, 1K supply.
  Mint site: https://www.bitdaemons.space/wavedaemons
