@@ -98,23 +98,6 @@ abstract contract Llamas is MaxAccess
     _;
   }
 
-  function setPresaleFees(
-    uint256 amount
-  ) external
-    onlyDev() {
-    presaleFees = amount;
-  }
-
-  // @dev will return minting fees
-  // @return - uint of mint costs in wei
-  function minterPresaleFees()
-    external
-    view
-    virtual
-    returns (uint) {
-    return presaleFees;
-  }
-
   // @dev this is to substract one to on chain minted
   function _subOne()
     internal {

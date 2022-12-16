@@ -170,10 +170,10 @@ module.exports = {
     },
 
     // FTM-main
-    // 
+    // "https://rpc.ftm.tools/"
     FTM: {
       provider: function() {
-        return new HDWalletProvider(process.env.MNEMONIC, "https://1rpc.io/ftm");
+        return new HDWalletProvider(process.env.MNEMONIC, "https://rpc.ftm.tools/");
       },
       network_id: 250,
       gasPrice: 35000000000, // 35 gwei
@@ -244,7 +244,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "^0.8.15",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "^0.8.17",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
       settings: {          // See the solidity docs for advice about optimization and evmVersion
         optimizer: {

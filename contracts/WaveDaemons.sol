@@ -34,6 +34,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 import "./eip/1412/ERC1412.sol";
 import "./eip/2981/ERC2981Collection.sol";
+import "./eip/721/IERC721Burnable.sol";
 import "./modules/timecop/TimeCop.sol";
 import "./modules/splitter/PaymentSplitterV2.sol";
 import "./modules/llamas/Llamas.sol";
@@ -57,7 +58,7 @@ contract WaveDaemons is TimeCop
   constructor() ERC1412("WaveDaemons", "WAVEDMN") {}
 
   function burnToMint(
-    uint256[] ids
+    uint256[] memory ids
   ) external
     notPaused()
     onlySale()
@@ -68,6 +69,10 @@ contract WaveDaemons is TimeCop
       revert MaxSplaining({
         reason: "Main:B1"
       });
+    } else if (this.minterMinted() + quant > this.minterCapacity()) {
+      revert MaxSplaining ({
+        reason: "Main:B2"
+      });
     } else {
       for (uint x = 0; x < quant;) {
         _safeMint(msg.sender, _nextUp());
@@ -76,9 +81,11 @@ contract WaveDaemons is TimeCop
       }
       // must call Approve for all first
       for (uint y = 0; y < quant * 5;) {
-        ERC721Burnable(Tinys).burn(ids[y]);
+        IERC721Burnable(Tinys).burn(ids[y]);
+        unchecked { ++y; }
       }
-   }
+    }
+  }
 
   function publicMint(
     uint quant
@@ -100,12 +107,11 @@ contract WaveDaemons is TimeCop
     }
   }
 
-
   function teamMint(
     uint256 quant
   ) external
     onlyOwner() {
-    if (this.minterMinted() + quant > this.minterCapacity() && 
+    if (this.minterMinted() + quant > this.minterCapacity() || 
         this.minterTeamMintsMinted() + quant > this.minterTeamMintsCapacity()) {
       revert MaxSplaining ({
         reason: "Main:TM1"

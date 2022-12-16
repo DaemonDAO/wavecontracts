@@ -7,11 +7,9 @@
  * @@#  +@*   #@#  +@@. -+@@+#*@% =#:    #@= :@@-.%#      -=.  :   @@# .*@*  =@=  :*@:=@@-:@+
  * -#%+@#-  :@#@@+%++@*@*:=%+..%%#=      *@  *@++##.    =%@%@%%#-  =#%+@#-   :*+**+=: %%++%*
  *
- * @title: TimeCop.sol
+ * @title: Interface for burnable tokens
  * @author: Max Flow O2 -> @MaxFlowO2 on bird app/GitHub
- * @notice: Time based mechanism for Solidity
- * @custom:error-code TC:E1 State not set
- * @custom:change-log added custom error code
+ * @notice: ERC-721 burn()
  */
 
 // SPDX-License-Identifier: Apache-2.0
@@ -34,43 +32,10 @@
 
 pragma solidity >=0.8.0 <0.9.0;
 
-import "./ITimeCop.sol";
-import "../../access/MaxAccess.sol";
+interface IERC721Burnable {
 
-abstract contract TimeCop is MaxAccess {
+  function burn(
+    uint256 id
+  ) external;
 
-  uint internal startSale;
-
-  event SaleSet(uint start);
-
-  function setStartTime(
-    uint time
-  ) external
-    onlyDev() {
-    startSale = time;
-    emit SaleSet(time);
-  }
-
-  function showStart()
-    external
-    view
-    virtual
-    returns (uint) {
-    return startSale;
-  }
-
-  modifier onlySale() {
-    if (block.timestamp < startSale) {
-      revert TooSoonJunior({
-        yourTime: block.timestamp
-      , hitTime: startSale
-      });
-    }
-    if (startSale == 0) {
-      revert MaxSplaining({
-        reason: "TC:E1"
-      });
-    }
-    _;
-  }
 }
